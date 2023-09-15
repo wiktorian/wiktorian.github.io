@@ -4,7 +4,7 @@
 <style type="text/css">
 	.st1{fill:none;stroke:#990202;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;}
 </style>
-<g transform="matrix(0.999751,0,0,0.999751,0,0)">
+
 	<path  class="st1" d="M87.7,99.1h51.9v79h-25.3v21.3H87.7v-10.3h-2.6v-14.2h2.6V99.1"/>
 	<path  class="st1" d="M139.6,99.1h50.3v100.4h-24.8v-21.3h-25.5V99.1"/>
 	<path  class="st1" d="M189.9,99.1l50.3,0.3v78.8h-25.6v21.3h-24.8V99.1"/>
@@ -31,5 +31,5 @@
 	<path  class="st1" d="M595.9,392.9h50.3v103h-22.9V493h-27.4L595.9,392.9"/>
 	<path  class="st1" d="M646.2,392.9h50.1v99.8h-27.4v3.2h-22.7L646.2,392.9"/>
 	<path  class="st1" d="M696.2,392.9h52.4v79h3.2v14.2h-3.4v9.7h-52.2v-3.2V392.9"/>
-</g>
+
 </svg>
