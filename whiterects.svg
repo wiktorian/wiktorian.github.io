@@ -2,7 +2,7 @@
 <svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 841.7 595.2" style="enable-background:new 0 0 841.7 595.2;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;}
+	.st0{fill:none;stroke:red;stroke-width:2;}
 </style>
 <g transform="matrix(0.999751,0,0,0.999751,0,0)">
 	<path vector-effect="none" class="st0" d="M88.1,99.2H140v79h-25.3v21.3H88.1v-10.3h-2.6v-14.2h2.6V99.2"/>
