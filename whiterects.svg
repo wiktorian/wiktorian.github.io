@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 841.7 595.2" style="enable-background:new 0 0 841.7 595.2;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;}
+</style>
+<g transform="matrix(0.999751,0,0,0.999751,0,0)">
+	<path vector-effect="none" class="st0" d="M88.1,99.2H140v79h-25.3v21.3H88.1v-10.3h-2.6v-14.2h2.6V99.2"/>
+	<path vector-effect="none" class="st0" d="M140,99.2h50.3v100.4h-24.8v-21.3H140V99.2"/>
+	<path vector-effect="none" class="st0" d="M190.3,99.2l50.3,0.3v78.8h-25.6v21.3h-24.8V99.2"/>
+	<path vector-effect="none" class="st0" d="M240.6,99.5l50.3-0.3v100.4h-25.3v-21.3h-25V99.5"/>
+	<path vector-effect="none" class="st0" d="M291,99.2l50.3,0.3v78.8H316v21.3h-25V99.2"/>
+	<path vector-effect="none" class="st0" d="M341.3,99.5l51.9-0.3v75.9h2.6v14h-2.4v10.8h-26.9v-21.6h-25.3V99.5"/>
+	<path vector-effect="none" class="st0" d="M423.2,99.5l51.9-0.3v79h-25.3v21.3h-26.6v-10.3h-2.9v-14.2h2.9V99.5"/>
+	<path vector-effect="none" class="st0" d="M475.1,99.2h50.1v100.4h-24.8v-21.3h-25.3V99.2"/>
+	<path vector-effect="none" class="st0" d="M525.1,99.2h50.3v79h-24.8v21.3h-25.6V99.2"/>
+	<path vector-effect="none" class="st0" d="M575.5,99.2h50.1v100.4h-24.8v-21.3h-25.3V99.2"/>
+	<path vector-effect="none" class="st0" d="M625.5,99.2h50.6v79h-25.3v21.3h-25.3V99.2"/>
+	<path vector-effect="none" class="st0" d="M676.1,99.2h50.6v100.4h-25.6v-21.3h-25V99.2"/>
+	<path vector-effect="none" class="st0" d="M726.7,99.2l51.6,0.3v75.6h2.9v14.2h-2.9v10.3h-26.6v-21.3h-25V99.2"/>
+	<path vector-effect="none" class="st0" d="M64.1,393h52.2v103H93.1v-3.2h-29v-8.2h-3.4v-14.2h3.4V393"/>
+	<path vector-effect="none" class="st0" d="M116.3,393h50.3v99.8h-27.4v3.2h-22.9V393"/>
+	<path vector-effect="none" class="st0" d="M166.6,393h50.3v103h-23.2v-0.5v-2.6h-27.1V393"/>
+	<path vector-effect="none" class="st0" d="M216.9,393h50.3v99.8h-27.7v3.2h-22.7V393"/>
+	<path vector-effect="none" class="st0" d="M267.2,393h50.1v103h-22.7v-3.2h-27.4V393"/>
+	<path vector-effect="none" class="st0" d="M317.3,393h52.2v77.4h3.7v14.2h-3.7v8.2h-29v3.2h-23.2V393"/>
+	<path vector-effect="none" class="st0" d="M393.2,393h52.4v103h-52.4v-9.7H390V472h3.2V393"/>
+	<path vector-effect="none" class="st0" d="M445.6,393h50.3v103h-23.2v-3.2h-27.1V393"/>
+	<path vector-effect="none" class="st0" d="M495.9,393h49.8v99.8h-27.1v3.2h-22.7V393"/>
+	<path vector-effect="none" class="st0" d="M545.7,393h50.6v103h-50.6v-3.2V393"/>
+	<path vector-effect="none" class="st0" d="M596.3,393h50.3v103h-22.9v-2.9h-27.4V393"/>
+	<path vector-effect="none" class="st0" d="M646.6,393h50.1v99.8h-27.4v3.2h-22.7V393"/>
+	<path vector-effect="none" class="st0" d="M696.6,393h52.4v79h3.2v14.2h-3.4v9.7h-52.2v-3.2V393"/>
+</g>
+</svg>
