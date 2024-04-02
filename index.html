@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<title>KSM Map</title>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="  crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="   crossorigin=""></script>
+		<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+		<link rel="stylesheet" href="https://opengeo.tech/maps/leaflet-search/src/leaflet-search.css" />
+		<script src="https://opengeo.tech/maps/leaflet-search/dist/leaflet-search.src.js"></script>
+		<script src="areas.js"></script>
+		<style>
+			html, body, #map {
+				height: 100%;
+				width: 100%;
+				margin: 0;
+			}
+
+			/* Tooltip */
+            .l-tooltip {
+				font-size: 10px;
+				font-family: roboto;
+				font-weight: bold;
+				background: none;
+				border: none;
+				box-shadow: none;
+				padding: 0;
+				color: #2c3a5f;
+				text-shadow: 0px 0px 4px #ffffff;
+            }
+            .leaflet-tooltip:before {
+                display: none;
+            } 
+
+			/* Logo  */
+			.map-logo {
+				width: 20vw;
+				height: auto;
+				pointer-events: none;
+				margin-bottom: 0 !important;
+			}
+
+			/* Search Control */
+			.leaflet-control-search .search-input {
+				max-width: 25vw !important;
+			}
+			.leaflet-control-search .search-tooltip {
+				max-width: 30vw;
+				overflow-y: hidden;
+			}
+			.leaflet-control-search .search-tip {
+				white-space: break-spaces;
+			}
+			.search-tip b {
+				color: #fff;
+				background: #2c78c9;
+				padding: 0 4px;
+				margin-right: 5px;
+				font-family: 'Roboto', tahoma, verdana;
+				border-radius: 2px;
+			}
+
+            /* Popup */
+			.popupBox {max-width: 18em;}
+            .titleBox {
+                font-family: "Roboto", tahoma, verdana;
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                padding: 2px 0 2px 0;
+				background-color: #2c78c9;
+				align-items: center;
+            }
+            .leaflet-popup-content {
+                padding: 0;
+                margin: 0;
+                line-height: inherit;
+                max-width: 18em !important;
+				min-width: 10em;
+            }
+            .leaflet-popup-content-wrapper {
+                padding: 0px;
+                text-align: left;
+                pointer-events: all;
+            }
+            .popupBoxContent {
+                font-family: "Roboto", tahoma, verdana;
+                color: rgba(0,0,0,.87);
+                font-size: 1em;
+                padding: 5px 10px;
+            }
+            .popupBoxContent span {
+                display: block;
+                text-align: left;
+                line-height: 1.3;
+            }
+            .popupBoxContent span {
+                word-break: break-word;
+            }
+            .titleBoxText {
+                font-size: 1.1em;
+                font-weight: 700;
+                margin: 5px 5px 5px 10px;
+                letter-spacing: .010em;
+                line-height: 18px;
+            }
+            .leaflet-container a.leaflet-popup-close-button {
+                padding: 0 0 10px 0 !important;
+                color: white;
+            }		
+            .popupBoxContent span[title="undefined"] {  display: none !important;  }
+            .popupBoxContent span[title=""] {  display: none !important;  }
+            .popupBoxContent span[title=" "] {  display: none !important;  }
+
+			@media only screen and (max-width: 768px) {
+				.map-logo {width: 30vw; margin-bottom: 10px !important;}
+				.leaflet-control-search .search-input {
+					max-width: 55vw !important;
+				}
+				.leaflet-control-search .search-tooltip {
+					max-width: 550vw;
+				}
+				.leaflet-popup-content {max-width: 50vw !important;}	
+				.popupBox {max-width: 50vw !important;}
+			}
+			@media only screen and (min-width: 1280px)  {
+				.map-logo {width: 14vw;}
+				.popupBox {max-width: 24vw !important;}
+				.leaflet-popup-content {max-width: 24vw !important;}
+			}				
+		</style>	
+
+	</head>
+	<body>
+
+		<div id="map" class="map"></div>
+		
+		<script>
+
+			// resolve tooltips overlapping
+			function overlap(rect1, rect2) {
+                return(!(rect1.right < rect2.left || 
+                        rect1.left > rect2.right || 
+                        rect1.bottom < rect2.top || 
+                        rect1.top > rect2.bottom));
+            };
+            function hideOverlappingTooltips() {
+                let rects = [];
+                const tooltips = document.getElementsByClassName('l-tooltip'); 
+                for (let i = 0; i < tooltips.length; i++) {
+					tooltips[i].style.visibility = '';
+					rects[i] = tooltips[i].getBoundingClientRect();
+                };
+                for (let i = 0; i < tooltips.length; i++) {
+					if (tooltips[i].style.visibility != 'hidden') {
+						for (let j = i + 1; j < tooltips.length; j++) {
+							if (overlap(rects[i], rects[j])) tooltips[j].style.visibility = 'hidden';
+						}
+					}
+                };
+            };
+
+			// default map settings
+			const map = L.map('map', {
+				minZoom: 2,
+				maxZoom: 12,
+				zoomSnap: 0
+			});
+
+			// set map bounds
+			const latLngBounds = L.latLngBounds([[14.71,-142.39], [62.52,-61.32]]);
+			map.fitBounds(latLngBounds);
+
+			// add basemap layer
+			const voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+				subdomains: 'abcd',
+				maxZoom: 20
+			}).addTo(map);
+			
+			// add areas layer
+			const areasLayer = L.geoJSON(null, {
+				// styling areas
+				style: function (feature) {
+					return {
+						weight: 0.5,
+						opacity: 0.7,
+						color: '#444',
+						fillOpacity: 0.5,
+						fillColor: '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
+					};
+				},	
+				onEachFeature: function (feature, layer) { 
+
+					// add toltip for each area
+					layer.bindTooltip('' + feature.properties.area, {permanent: true, direction: "center", className: "l-tooltip"});
+					
+					// set popup for each area
+					layer.bindPopup('<div class="popupBox">\
+							<div class="titleBox""><span class="titleBoxText" title="'+  feature.properties.area + '"><b>' +  feature.properties.area + ' </b></span>\</div>\
+							<div class="popupBoxContent">\
+								<span title="'+  feature.properties.count + '"><b>Number of Zip/FSA: </b> ' +  feature.properties.count + ' </span>\
+								<span title="'+  feature.properties.Zip_FSA + '"><b>3Zip/FSA: </b> ' +  feature.properties.Zip_FSA + ' </span>\
+							</div>\
+						</div>', 
+					{offset: new L.Point(0, -1)});
+
+					// set hover effect
+					layer.on('mouseover', function (e) {
+						this.setStyle({
+						'fillOpacity': 0.8,
+						});
+					});
+					layer.on('mouseout', function () {
+						this.setStyle({
+							'fillOpacity': 0.5,
+						});
+					});
+				}
+			});
+
+			// get data from csv file and merge with areas
+			d3.csv("./data.csv").then(function(data){
+
+				// merge two dataset
+				areasGeom.features.forEach((item) => {
+					const filteredRow = data.filter((d) => d.area == item.properties.area );
+					item.properties.count = filteredRow[0].count;
+					item.properties.Zip_FSA = filteredRow[0].Zip_FSA;
+				});
+
+				// add areas layer to the map
+				areasLayer.addData(areasGeom);
+				map.addLayer(areasLayer);
+
+				// fix tooltips overlapping
+				hideOverlappingTooltips();
+			});
+
+			// fix tooltips overlapping after zooming
+			map.on('zoomend', function() {
+				hideOverlappingTooltips();
+			}); 
+
+			// add logo
+			const logo = L.control({position: 'bottomleft'});
+			logo.onAdd = function(map){
+				let div = L.DomUtil.create('div', 'map-logo');
+				div.innerHTML= "<img src='logo.svg'/>";
+				return div;
+			}
+			logo.addTo(map);
+
+			// set search box
+			const searchControl = new L.Control.Search({
+				position:'topright',
+				textPlaceholder: 'Search Market Area by 3Zip or FSA ...',	
+				layer: areasLayer,
+				propertyName: 'Zip_FSA',
+				initial: false,
+				tooltipLimit: 4,
+				marker: false,
+				buildTip: function(text, val) {
+					let type = val.layer.feature.properties.area;
+					return '<a href="#"><b>'+ type +'</b>'+ text +'</a>';
+				},
+				moveToLocation: function(latlng, title, map) {
+					map.fitBounds( latlng.layer.getBounds() ); 
+				}
+			});
+
+			// heighlight area after search
+			searchControl.on('search:locationfound', function(e) {
+				e.layer.setStyle({fillColor: 'blue', color: 'red', weight: 3, opacity: 1, fillOpacity: 0.25});
+				if(e.layer._popup) {
+					e.layer.openPopup();
+				}
+			}).on('search:collapsed', function(e) {
+				areasLayer.eachLayer(function(layer) {
+					areasLayer.resetStyle(layer);
+				});	
+			});
+
+			// add search box
+			map.addControl(searchControl);
+			
+		</script>
+	</body>
+</html>
